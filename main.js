@@ -27,5 +27,3 @@ window.addEventListener('deviceorientation', function (e){
     
 
 })
-
-zmiana 
