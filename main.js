@@ -1,14 +1,14 @@
-function l (cont){
+function l(cont) {
     console.log(cont)
 }
 
 let canvas = {
-    start(){
+    start() {
         this.src = document.querySelector("#gameBox");
-        this.ctx = this.src.getContext('2d');        
+        this.ctx = this.src.getContext('2d');
     },
-    clear(){
-        this.ctx.clearRect(0,0,this.src.width, this.src.height);
+    clear() {
+        this.ctx.clearRect(0, 0, this.src.width, this.src.height);
     }
 }
 
@@ -23,7 +23,7 @@ class Ball {
         this.color = color;
         this.vX = 0;
         this.vY = 0;
-        if(isControlable)
+        if (isControlable)
             window.addEventListener('deviceorientation', this.handleOrientation);
     }
 
@@ -37,7 +37,7 @@ class Ball {
     }
 
     //set speed of ball movment
-    setV(vX,vY){
+    setV(vX, vY) {
         this.vX = 0;
         this.vY = 0;
         this.vX = vX;
@@ -45,57 +45,92 @@ class Ball {
     }
 
     //update x and y position
-    move() {        
+    move() {
         this.x += this.vX;
-        this.y += this.vY;      
+        this.y += this.vY;
     }
 
     //execute function
-    update(){
+    update() {
         this.move()
-        this.boxCollision()        
+        this.boxCollision()
         this.fill()
     }
 
     //check if ball is collding w with bounds of canvas
-    boxCollision(){
-        if((this.x - this.radius) <= 0)
+    boxCollision() {
+        if ((this.x - this.radius) <= 0)
             this.x = 0 + this.radius;
-        if((this.x + this.radius) >= canvas.src.width)
+        if ((this.x + this.radius) >= canvas.src.width)
             this.x = canvas.src.width - this.radius;
-        if((this.y - this.radius) <= 0)
+        if ((this.y - this.radius) <= 0)
             this.y = this.radius;
-        if((this.y + this.radius) >= canvas.src.height)
+        if ((this.y + this.radius) >= canvas.src.height)
             this.y = canvas.src.height - this.radius;
+    }
+
+    //checks if ball is colliding witch each other
+    checkBallCollision(ball){
+
+        let a = this.x - ball.x
+        let b = this.y - ball.y
+        let c = Math.sqrt(a*a + b*b)
+        let x = this.radius + ball.radius
+
+        if(c <= x)
+            return true;
+        else 
+            return false;
+
     }
 
     //get gamma and beta 
     handleOrientation(e) {
         let x = e.gamma;
         let y = e.beta;
-    
+
         output.innerHTML = "beta :" + x + "\n";
         output.innerHTML += "gamma :" + y + "\n";
 
-        ball.setV(x/3,y/3);
-        
+        ball.setV(x / 3, y / 3);
+
         output.innerHTML += "beta V:" + ball.vX + "\n";
         output.innerHTML += "gamma V:" + ball.vY + "\n";
-        
+
     }
 }
 
-let ball = new Ball(canvas.src.height/2, canvas.src.width /2, 20, 'red', true);
-let ball2 = new Ball(0,0,20,'black', false);
+let ball = new Ball(canvas.src.height / 2, canvas.src.width / 2, 20, 'blue', true);
+let ball2 = new Ball(60, 60, 30, 'red', false);
+let ball3 = new Ball(260, 80, 30, 'red', false);
+let ball4 = new Ball(50, 250, 30, 'red', false);
+let ball5 = new Ball(440, 200, 30, 'red', false);
+let ball6 = new Ball(250, 320, 30, 'red', false);
+let ball7 = new Ball(170, 280, 30, 'red', false);
+let ball8 = new Ball(160, 200, 30, 'red', false);
+let ball9 = new Ball(330, 290, 30, 'red', false);
+let ball10 = new Ball(400, 400, 30, 'red', false);
+let ball11 = new Ball(100, 400, 30, 'red', false);
+let ball12 = new Ball(380, 100, 30, 'red', false);
+
+let finishedBall = new Ball(240, 440, 40, 'green', false);
+
+//list with red holes
+let redBalls = [];
+redBalls.push(ball2, ball3, ball4, ball5, ball6, ball7, ball8, ball9, ball10, ball11, ball12, finishedBall);
+
 
 //update all game (moving, collision, drawing)
-function update(){
+function update() {
     canvas.clear();
-    ball.update()
-    ball2.update();
+    ball.update();
+    redBalls.forEach(element => {
+        element.update();
+    });
 }
 
-let interval = setInterval(function(){update()},1000/60);
+
+let interval = setInterval(function () { update() }, 1000 / 60);
 
 
 
