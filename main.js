@@ -90,13 +90,8 @@ class Ball {
         let x = e.gamma;
         let y = e.beta;
 
-        output.innerHTML = "beta :" + x + "\n";
-        output.innerHTML += "gamma :" + y + "\n";
-
         ball.setV(x / 3, y / 3);
 
-        output.innerHTML += "beta V:" + ball.vX + "\n";
-        output.innerHTML += "gamma V:" + ball.vY + "\n";
 
     }
 }
