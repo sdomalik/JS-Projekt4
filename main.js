@@ -70,19 +70,21 @@ class Ball {
     }
 
     //checks if ball is colliding witch each other
-    checkBallCollision(ball){
+    checkBallCollision(ball) {
 
         let a = this.x - ball.x
         let b = this.y - ball.y
-        let c = Math.sqrt(a*a + b*b)
+        let c = Math.sqrt(a * a + b * b)
         let x = this.radius + ball.radius
 
-        if(c <= x)
+        if (c <= x) {
             return true;
-        else 
+        }
+        else
             return false;
 
     }
+
 
     //get gamma and beta 
     handleOrientation(e) {
@@ -101,6 +103,7 @@ class Ball {
 }
 
 let ball = new Ball(canvas.src.height / 2, canvas.src.width / 2, 20, 'blue', true);
+
 let ball2 = new Ball(60, 60, 30, 'red', false);
 let ball3 = new Ball(260, 80, 30, 'red', false);
 let ball4 = new Ball(50, 250, 30, 'red', false);
@@ -116,19 +119,29 @@ let ball12 = new Ball(380, 100, 30, 'red', false);
 let finishedBall = new Ball(240, 440, 40, 'green', false);
 
 //list with red holes
-let redBalls = [];
-redBalls.push(ball2, ball3, ball4, ball5, ball6, ball7, ball8, ball9, ball10, ball11, ball12, finishedBall);
+let balls = [];
+balls.push(ball2, ball3, ball4, ball5, ball6, ball7, ball8, ball9, ball10, ball11, ball12, finishedBall);
 
 
 //update all game (moving, collision, drawing)
 function update() {
     canvas.clear();
+    //loop for execute collision check with holes and finish
+    for (i = 0; i < balls.length; i++) {
+        if (ball.checkBallCollision(balls[i])) {
+            if (balls[i].color == "red")
+                l("przegrales")
+            else if (balls[i].color == "green")
+                l("wygrales")
+        }
+    }
     ball.update();
-    redBalls.forEach(element => {
+    //drawing elements from balls list on canvas
+    balls.forEach(element => {
         element.update();
     });
-}
 
+}
 
 let interval = setInterval(function () { update() }, 1000 / 60);
 
