@@ -1,26 +1,15 @@
+
+#header{ 
+    text-align: center;
+}
 #gameBox {
-    position: relative;
-    width: 500px;
-    height: 500px;
     background-color: grey;
     border: 5px solid black;
     border-radius: 25px;
+    display: block;
+    margin: 0 auto;
 }
-
-#ball{
-    background-color: green;
-    width: 25px;
-    height: 25px;
-    top: 250px;
-    left: 250px;
-    position: absolute;
-    border-radius: 100%;
-}
-#endBox {
-    background-color: yellow;
-    width: 100px;
-    height: 50px;
-    position: relative;
-    top: 450px;
-    left: 205px;
+#hints{
+    text-align: center;
+    width: 100%;
 }
