@@ -15,7 +15,7 @@ let canvas = {
 canvas.start();
 
 class Ball {
-    //create ball with four parameters
+    //create ball
     constructor(x, y, radius, color, isControlable) {
         this.x = x;
         this.y = y;
@@ -23,6 +23,7 @@ class Ball {
         this.color = color;
         this.vX = 0;
         this.vY = 0;
+        this.time = Date.now();
         if (isControlable)
             window.addEventListener('deviceorientation', this.handleOrientation);
     }
@@ -71,15 +72,13 @@ class Ball {
 
     //checks if ball is colliding witch each other
     checkBallCollision(ball) {
-
         let a = this.x - ball.x
         let b = this.y - ball.y
         let c = Math.sqrt(a * a + b * b)
         let x = this.radius + ball.radius
 
-        if (c <= x) {
+        if (c <= x)
             return true;
-        }
         else
             return false;
 
@@ -129,10 +128,14 @@ function update() {
     //loop for execute collision check with holes and finish
     for (i = 0; i < balls.length; i++) {
         if (ball.checkBallCollision(balls[i])) {
-            if (balls[i].color == "red")
-                l("przegrales")
-            else if (balls[i].color == "green")
-                l("wygrales")
+            if (balls[i].color == "red") {
+                clearInterval(interval);
+                alert("You Lost!!!" + "\n" + "Your Time:  " + (Date.now() - ball.time) / 1000)
+            }
+            else if (balls[i].color == "green") {
+                clearInterval(interval);
+                alert("You Won!!!" + "\n" + "Your Time:  " + (Date.now() - ball.time) / 1000)
+            }
         }
     }
     ball.update();
